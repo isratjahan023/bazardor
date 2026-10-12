@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 import { authClient } from "../../lib/auth-client";
 import GitHubLoginButton from "../../components/GitHubLoginButton";
+import GoogleLoginButton from "../../components/GoogleLoginButton";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -43,8 +44,8 @@ export default function SignUpPage() {
       return;
     }
 
-    if (password.length < 8) {
-      showError("পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।");
+    if (password.length < 8 || password.length > 128) {
+      showError("পাসওয়ার্ড ৮ থেকে ১২৮ অক্ষরের হতে হবে।");
       return;
     }
 
@@ -63,9 +64,7 @@ export default function SignUpPage() {
       });
 
       if (result.error) {
-        showError(
-          result.error.message || "অ্যাকাউন্ট তৈরি করা যায়নি।"
-        );
+        showError(result.error.message || "অ্যাকাউন্ট তৈরি করা যায়নি।");
         return;
       }
 
@@ -84,9 +83,7 @@ export default function SignUpPage() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold">
-          অ্যাকাউন্ট তৈরি করুন
-        </h1>
+        <h1 className="text-2xl font-bold">অ্যাকাউন্ট তৈরি করুন</h1>
 
         <p className="mt-2 text-sm text-[#667269]">
           বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
@@ -167,10 +164,9 @@ export default function SignUpPage() {
               type="password"
               autoComplete="new-password"
               value={confirmPassword}
-              onChange={(event) =>
-                setConfirmPassword(event.target.value)
-              }
+              onChange={(event) => setConfirmPassword(event.target.value)}
               placeholder="আবার লিখুন"
+              maxLength={128}
               required
               className={inputClass}
             />
@@ -190,13 +186,17 @@ export default function SignUpPage() {
             {pending ? "তৈরি হচ্ছে…" : "অ্যাকাউন্ট তৈরি করুন"}
           </button>
         </fieldset>
-        <div className="my-5 flex items-center gap-3">
-  <div className="h-px flex-1 bg-[#e3ebe5]" />
-  <span className="text-xs text-[#667269]">অথবা</span>
-  <div className="h-px flex-1 bg-[#e3ebe5]" />
-</div>
 
-<GitHubLoginButton />
+        <div className="my-5 flex items-center gap-3">
+          <div className="h-px flex-1 bg-[#e3ebe5]" />
+          <span className="text-xs text-[#667269]">অথবা</span>
+          <div className="h-px flex-1 bg-[#e3ebe5]" />
+        </div>
+
+        <fieldset disabled={pending} className="space-y-3">
+          <GoogleLoginButton />
+          <GitHubLoginButton />
+        </fieldset>
 
         <p className="mt-5 text-center text-sm">
           অ্যাকাউন্ট আছে?{" "}

@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { authClient } from "../../lib/auth-client";
 import AuthNotice from "../../components/AuthNotice";
 import GitHubLoginButton from "../../components/GitHubLoginButton";
+import GoogleLoginButton from "../../components/GoogleLoginButton";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -142,30 +143,28 @@ export default function SignInPage() {
             {pending ? "সাইন ইন হচ্ছে…" : "সাইন ইন"}
           </button>
         </fieldset>
-        <div className="my-5 flex items-center gap-3">
-  <div className="h-px flex-1 bg-[#e3ebe5]" />
-  <span className="text-xs text-[#667269]">অথবা</span>
-  <div className="h-px flex-1 bg-[#e3ebe5]" />
-</div>
 
-<GitHubLoginButton />
+        <div className="my-5 flex items-center gap-3">
+          <div className="h-px flex-1 bg-[#e3ebe5]" />
+          <span className="text-xs text-[#667269]">অথবা</span>
+          <div className="h-px flex-1 bg-[#e3ebe5]" />
+        </div>
+
+        <fieldset disabled={pending} className="space-y-3">
+          <GoogleLoginButton />
+          <GitHubLoginButton />
+        </fieldset>
 
         <p className="mt-5 text-center text-sm">
           অ্যাকাউন্ট নেই?{" "}
-          <Link
-            href="/signup"
-            className="text-[#008c3e] hover:underline"
-          >
+          <Link href="/signup" className="text-[#008c3e] hover:underline">
             সাইন আপ করুন
           </Link>
         </p>
       </form>
 
       <div className="mt-6 text-center">
-        <Link
-          href="/"
-          className="text-sm text-[#667269] hover:underline"
-        >
+        <Link href="/" className="text-sm text-[#667269] hover:underline">
           ← হোম পেজে ফিরে যান
         </Link>
       </div>
