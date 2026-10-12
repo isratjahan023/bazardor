@@ -51,4 +51,11 @@ export const auth = betterAuth({
     autoSignIn: false,
     minPasswordLength: 8,
   },
+  socialProviders: {
+  github: {
+    clientId: process.env.GITHUB_CLIENT_ID!,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    scope: ["user:email"],
+  },
+},
 });

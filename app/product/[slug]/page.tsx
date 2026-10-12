@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
+import Loading from "./loading";
 import { auth } from "../../../lib/auth";
 import {
   banglaNumber,
@@ -22,6 +24,10 @@ type ProductDetails = Product & {
   markets: Market[];
 };
 
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 const API_URL = "https://openapi.programming-hero.com/api/bazardor";
 
 const units: Record<string, string> = {
@@ -33,14 +39,17 @@ const units: Record<string, string> = {
   pcs: "পিস",
 };
 
-export default async function ProductDetailsPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default function ProductDetailsPage({ params }: PageProps) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ProductDetailsContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ProductDetailsContent({ params }: PageProps) {
   const { slug } = await params;
 
-  // API-এর numeric ID খুঁজতে slug দিয়ে product মিলিয়ে নিচ্ছি।
   const listResponse = await fetch(`${API_URL}/products`, {
     cache: "no-store",
   });
@@ -63,7 +72,6 @@ export default async function ProductDetailsPage({
     notFound();
   }
 
-  // Server-এ login session যাচাই করছি।
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -122,13 +130,16 @@ export default async function ProductDetailsPage({
         <Link href="/" className="hover:text-[#008c3e]">
           হোম
         </Link>
+
         <span aria-hidden="true">›</span>
+
         <Link
           href={`/category/${product.category}`}
           className="hover:text-[#008c3e]"
         >
           {product.categoryNameBn}
         </Link>
+
         <span aria-hidden="true">›</span>
         <span>{product.nameBn}</span>
       </nav>
@@ -149,6 +160,7 @@ export default async function ProductDetailsPage({
 
             <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
               <span className="text-[#667269]">প্রতি {unit}</span>
+
               <Link
                 href={`/category/${product.category}`}
                 className="rounded-full bg-[#e1f2e6] px-3 py-1 text-xs text-[#008c3e]"
@@ -169,12 +181,15 @@ export default async function ProductDetailsPage({
 
         <div className="shrink-0 rounded-2xl bg-[#f0f6f1] p-4 text-center">
           <p className="text-xs text-[#667269]">আজকের দাম</p>
+
           <p className="mt-2 text-3xl font-bold">
             {banglaNumber(product.today)}
           </p>
+
           <p className="mt-1 text-sm text-[#667269]">
             টাকা / {unit}
           </p>
+
           <p className={`mt-2 text-sm font-semibold ${changeColor}`}>
             {arrow} {banglaNumber(Math.abs(product.change.pct))}%
           </p>
@@ -187,10 +202,12 @@ export default async function ProductDetailsPage({
         <div className="mt-4 grid gap-4 sm:grid-cols-3">
           <div className="rounded-2xl border border-[#e3ebe5] p-4">
             <p className="text-xs text-[#667269]">সর্বনিম্ন দাম</p>
+
             <p className="mt-2 text-xl font-bold text-green-600">
               {minimum === null ? "—" : banglaNumber(minimum)}{" "}
               <span className="text-sm font-normal">টাকা</span>
             </p>
+
             <p className="mt-2 text-xs text-[#667269]">
               বাজারগুলোর মধ্যে সর্বনিম্ন
             </p>
@@ -198,10 +215,12 @@ export default async function ProductDetailsPage({
 
           <div className="rounded-2xl border border-[#e3ebe5] p-4">
             <p className="text-xs text-[#667269]">সর্বাধিক দাম</p>
+
             <p className="mt-2 text-xl font-bold text-red-500">
               {maximum === null ? "—" : banglaNumber(maximum)}{" "}
               <span className="text-sm font-normal">টাকা</span>
             </p>
+
             <p className="mt-2 text-xs text-[#667269]">
               বাজারগুলোর মধ্যে সর্বাধিক
             </p>
@@ -209,12 +228,14 @@ export default async function ProductDetailsPage({
 
           <div className="rounded-2xl border border-[#e3ebe5] p-4">
             <p className="text-xs text-[#667269]">গড় দাম</p>
+
             <p className="mt-2 text-xl font-bold text-green-600">
               {banglaNumber(product.today)}{" "}
               <span className="text-sm font-normal">টাকা</span>
             </p>
+
             <p className="mt-2 text-xs text-[#667269]">
-              API-তে দেওয়া আজকের দাম
+              প্রতি {unit}-এর হিসাবে
             </p>
           </div>
         </div>
@@ -251,13 +272,17 @@ export default async function ProductDetailsPage({
                       <th scope="row" className="px-4 py-3 font-normal">
                         {market.market}
                       </th>
+
                       <td className="px-4 py-3">{market.division}</td>
+
                       <td className="px-4 py-3">
                         {banglaNumber(market.min)} টাকা
                       </td>
+
                       <td className="px-4 py-3">
                         {banglaNumber(market.max)} টাকা
                       </td>
+
                       <td className="px-4 py-3 font-semibold">
                         {banglaNumber((market.min + market.max) / 2)} টাকা
                       </td>

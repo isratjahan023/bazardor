@@ -10,9 +10,16 @@ export default function AuthNotice() {
   const reason = searchParams.get("reason");
 
   useEffect(() => {
-    if (reason === "protected" && !shown.current) {
+    if (shown.current) return;
+
+    if (reason === "protected") {
       toast.error("পণ্যের বিস্তারিত দেখতে আগে সাইন ইন করুন।", {
         id: "protected-route",
+      });
+      shown.current = true;
+    } else if (reason === "oauth-error") {
+      toast.error("Social login সম্পন্ন হয়নি। আবার চেষ্টা করুন।", {
+        id: "oauth-error",
       });
       shown.current = true;
     }

@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 import { authClient } from "../../../lib/auth-client";
 
+
 export default function UpdateProfilePage() {
   const router = useRouter();
 

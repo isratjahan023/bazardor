@@ -6,6 +6,7 @@ import { useState, type FormEvent } from "react";
 import toast from "react-hot-toast";
 
 import { authClient } from "../../lib/auth-client";
+import GitHubLoginButton from "../../components/GitHubLoginButton";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -189,6 +190,13 @@ export default function SignUpPage() {
             {pending ? "তৈরি হচ্ছে…" : "অ্যাকাউন্ট তৈরি করুন"}
           </button>
         </fieldset>
+        <div className="my-5 flex items-center gap-3">
+  <div className="h-px flex-1 bg-[#e3ebe5]" />
+  <span className="text-xs text-[#667269]">অথবা</span>
+  <div className="h-px flex-1 bg-[#e3ebe5]" />
+</div>
+
+<GitHubLoginButton />
 
         <p className="mt-5 text-center text-sm">
           অ্যাকাউন্ট আছে?{" "}

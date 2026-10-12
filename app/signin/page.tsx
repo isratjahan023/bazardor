@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 import { authClient } from "../../lib/auth-client";
 import AuthNotice from "../../components/AuthNotice";
+import GitHubLoginButton from "../../components/GitHubLoginButton";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -141,6 +142,13 @@ export default function SignInPage() {
             {pending ? "সাইন ইন হচ্ছে…" : "সাইন ইন"}
           </button>
         </fieldset>
+        <div className="my-5 flex items-center gap-3">
+  <div className="h-px flex-1 bg-[#e3ebe5]" />
+  <span className="text-xs text-[#667269]">অথবা</span>
+  <div className="h-px flex-1 bg-[#e3ebe5]" />
+</div>
+
+<GitHubLoginButton />
 
         <p className="mt-5 text-center text-sm">
           অ্যাকাউন্ট নেই?{" "}
