@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import UserMenu from "./UserMenu";
+import Image from "next/image";
 
 type Category = {
   id: string;
@@ -81,12 +82,13 @@ export default function Navbar() {
       {/* Logo, date and authentication links */}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4">
         <Link href="/" className="flex items-center gap-2">
-          <span
-            aria-hidden="true"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#008c3e] text-xl"
-          >
-            🛒
-          </span>
+         <Image
+  src="/logo-icon.png"
+  alt=""
+  width={40}
+  height={40}
+  className="h-10 w-10 shrink-0 object-contain"
+/>
 
           <div>
             <p className="text-xl font-bold leading-tight">
