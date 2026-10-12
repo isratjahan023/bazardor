@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
 import toast from "react-hot-toast";
 
 import { authClient } from "../../lib/auth-client";
+import AuthNotice from "../../components/AuthNotice";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -71,6 +72,10 @@ export default function SignInPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
+      <Suspense fallback={null}>
+        <AuthNotice />
+      </Suspense>
+
       <div className="text-center">
         <h1 className="text-2xl font-bold">সাইন ইন</h1>
 
