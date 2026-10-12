@@ -10,3 +10,31 @@ body {
   color: #202a22;
   font-family: Arial, Helvetica, sans-serif;
 }
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll 180s linear infinite;
+}
+
+.price-ticker:hover .ticker-track,
+.price-ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+
+  .price-ticker {
+    overflow-x: auto;
+  }
+}
