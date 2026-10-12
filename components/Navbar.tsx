@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import UserMenu from "./UserMenu";
 
 type Category = {
   id: string;
@@ -97,21 +98,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <div className="flex shrink-0 items-center gap-2 text-xs sm:gap-4 sm:text-sm">
-          <Link
-            href="/signin"
-            className="rounded-lg px-2 py-2 hover:bg-green-50"
-          >
-            সাইন ইন
-          </Link>
-
-          <Link
-            href="/signup"
-            className="rounded-lg bg-[#008c3e] px-3 py-2 text-white shadow-sm hover:bg-[#007533] sm:px-4"
-          >
-            সাইন আপ
-          </Link>
-        </div>
+       <UserMenu />
       </div>
 
       {/* Categories fetched from the API */}
