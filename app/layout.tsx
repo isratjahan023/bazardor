@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import PriceTicker from "../components/PriceTicker";
 import Footer from "../components/Footer";
+import ToastProvider from "../components/ToastProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({
         <PriceTicker />
 
         <div className="flex-1">
+          <ToastProvider />
           <Suspense
             fallback={
               <p role="status" className="px-4 py-10 text-center">

@@ -1,6 +1,15 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { MongoClient } from "mongodb";
+import { setServers } from "node:dns";
+import { setServers as setPromiseServers } from "node:dns/promises";
+
+if (process.env.NODE_ENV === "development") {
+  const dnsServers = ["1.1.1.1", "8.8.8.8"];
+
+  setServers(dnsServers);
+  setPromiseServers(dnsServers);
+}
 
 const uri = process.env.MONGODB_URI;
 const secret = process.env.BETTER_AUTH_SECRET;
