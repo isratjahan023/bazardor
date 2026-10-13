@@ -13,11 +13,13 @@ if (process.env.NODE_ENV === "development") {
 
 const uri = process.env.MONGODB_URI;
 const secret = process.env.BETTER_AUTH_SECRET;
-const baseURL = process.env.BETTER_AUTH_URL;
+const configuredURL = process.env.BETTER_AUTH_URL;
 
-if (!uri || !secret || !baseURL) {
+if (!uri || !secret || !configuredURL) {
   throw new Error("Auth environment variables are missing.");
 }
+
+const baseURL = new URL(configuredURL.trim()).origin;
 
 const globalForMongo = globalThis as typeof globalThis & {
   bazardorMongoClient?: MongoClient;
@@ -40,6 +42,14 @@ export const auth = betterAuth({
   appName: "BazarDor",
   baseURL,
   secret,
+
+  trustedOrigins: [
+    baseURL,
+    "https://bazardor-i9tc.vercel.app",
+    ...(process.env.NODE_ENV === "development"
+      ? ["http://localhost:3000"]
+      : []),
+  ],
 
   database: mongodbAdapter(db, {
     client,
