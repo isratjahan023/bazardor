@@ -4,7 +4,7 @@ BazarDor is a Bengali grocery price tracking website that helps users explore da
 
 ## 🔗 Links
 
-- Live Website: Coming soon
+- Live Website: https://startling-queijadas-091480.netlify.app
 - GitHub Repository: https://github.com/isratjahan023/bazardor
 
 ## 🛠️ Technologies Used
@@ -31,7 +31,7 @@ BazarDor is a Bengali grocery price tracking website that helps users explore da
 
 ## 📡 Data Source
 
-Product and category data are fetched from the Programming Hero BazarDor API:
+Product and category data are fetched from the given API:
 
 https://openapi.programming-hero.com/api/bazardor
 
