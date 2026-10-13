@@ -37,7 +37,7 @@ export default function Hero() {
 
         <a
           href="#সব-পণ্য"
-          className="mt-6 inline-flex rounded-lg bg-[#008c3e] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#007533]"
+          className="btn btn-sm mt-6 rounded-lg border-0 bg-[#008c3e] px-5 font-semibold text-white shadow-sm transition-colors hover:bg-[#007533] sm:btn-md"
         >
           সব পণ্য দেখুন
         </a>
