@@ -135,11 +135,11 @@ export default function PriceTicker() {
               const direction = product.change.dir;
 
               const color =
-                direction === "up"
-                  ? "text-red-500"
-                  : direction === "down"
-                    ? "text-green-600"
-                    : "text-gray-500";
+  direction === "up"
+    ? "text-green-600"
+    : direction === "down"
+      ? "text-red-500"
+      : "text-gray-500";
 
               const arrow =
                 direction === "up"

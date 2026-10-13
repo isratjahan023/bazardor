@@ -33,9 +33,9 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const badgeColor =
     direction === "up"
-      ? "text-red-500"
+      ? "text-green-600"
       : direction === "down"
-        ? "text-green-600"
+        ? "text-red-500"
         : "text-gray-500";
 
   const arrow =

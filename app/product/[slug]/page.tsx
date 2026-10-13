@@ -108,14 +108,22 @@ async function ProductDetailsContent({ params }: PageProps) {
       ? Math.max(...markets.map((market) => market.max))
       : null;
 
+  const average =
+    markets.length > 0
+      ? markets.reduce(
+          (total, market) => total + (market.min + market.max) / 2,
+          0
+        ) / markets.length
+      : null;
+
   const difference = product.today - product.yesterday;
   const direction = product.change.dir;
 
   const changeColor =
     direction === "up"
-      ? "text-red-500"
+      ? "text-green-600"
       : direction === "down"
-        ? "text-green-600"
+        ? "text-red-500"
         : "text-gray-500";
 
   const arrow =
@@ -230,12 +238,12 @@ async function ProductDetailsContent({ params }: PageProps) {
             <p className="text-xs text-[#667269]">গড় দাম</p>
 
             <p className="mt-2 text-xl font-bold text-green-600">
-              {banglaNumber(product.today)}{" "}
+              {average === null ? "—" : banglaNumber(average)}{" "}
               <span className="text-sm font-normal">টাকা</span>
             </p>
 
             <p className="mt-2 text-xs text-[#667269]">
-              প্রতি {unit}-এর হিসাবে
+              বাজারগুলোর দামের মধ্যমান থেকে আনুমানিক গড়
             </p>
           </div>
         </div>
@@ -253,11 +261,21 @@ async function ProductDetailsContent({ params }: PageProps) {
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="bg-[#f0f6f1] text-[#667269]">
                 <tr>
-                  <th scope="col" className="px-4 py-3">বাজার</th>
-                  <th scope="col" className="px-4 py-3">বিভাগ</th>
-                  <th scope="col" className="px-4 py-3">সর্বনিম্ন</th>
-                  <th scope="col" className="px-4 py-3">সর্বাধিক</th>
-                  <th scope="col" className="px-4 py-3">গড়</th>
+                  <th scope="col" className="px-4 py-3">
+                    বাজার
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    বিভাগ
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    সর্বনিম্ন
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    সর্বাধিক
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    গড়
+                  </th>
                 </tr>
               </thead>
 
@@ -269,11 +287,16 @@ async function ProductDetailsContent({ params }: PageProps) {
                       key={`${market.market}-${index}`}
                       className="border-t border-[#e3ebe5] even:bg-[#f0f6f1]"
                     >
-                      <th scope="row" className="px-4 py-3 font-normal">
+                      <th
+                        scope="row"
+                        className="px-4 py-3 font-normal"
+                      >
                         {market.market}
                       </th>
 
-                      <td className="px-4 py-3">{market.division}</td>
+                      <td className="px-4 py-3">
+                        {market.division}
+                      </td>
 
                       <td className="px-4 py-3">
                         {banglaNumber(market.min)} টাকা
@@ -284,7 +307,10 @@ async function ProductDetailsContent({ params }: PageProps) {
                       </td>
 
                       <td className="px-4 py-3 font-semibold">
-                        {banglaNumber((market.min + market.max) / 2)} টাকা
+                        {banglaNumber(
+                          (market.min + market.max) / 2
+                        )}{" "}
+                        টাকা
                       </td>
                     </tr>
                   ))}
